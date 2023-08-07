@@ -4,7 +4,7 @@
 #include <vector>
 #include <fstream>
 
-#define OUTPUT(x) std::cout << x << std::endl;
+#define OUTPUT(x) std::cout << x;
 
 void write_to_file(const std::string& file_path, const std::vector<double>& h_array, const std::vector<double>& err_array);
 
@@ -25,7 +25,7 @@ int main() {
 			break;
 		}
 		else {
-			OUTPUT("wrong choice!! Choose again!");
+			OUTPUT("wrong choice!! Choose again!\n");
 		}
 	}
 }
@@ -70,7 +70,7 @@ void test_mg() {
 	unsigned int max_level;
 	std::cin >> max_level;
 
-	std::cout << "input the max_iteration: ";
+	std::cout << "input the max_iteration_times: ";
 	unsigned int max_iteration;
 	std::cin >> max_iteration;
 
