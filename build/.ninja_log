@@ -1,0 +1,7 @@
+# ninja log v5
+392	460	1688561197807706550	/home/lky/研究生课程/有限元/读书报告/bin/test	5e9ce7eead56d45
+1	392	1688561197741039215	test/CMakeFiles/test.dir/test.cpp.o	c4821c2b57e69d80
+6277	6593	1687063875236924006	/home/lky/研究生课程/有限元/读书报告/bin/test_fem	2ad927e5546b11d4
+2	6277	1687063874870253982	src/CMakeFiles/test_fem.dir/P1Fem.cpp.o	2bea7ab4d1575063
+2	4856	1687063867860190363	src/CMakeFiles/test_fem.dir/MG.cpp.o	681408aacb984fd4
+2	1588	1687063864620161314	src/CMakeFiles/test_fem.dir/test_fem.cpp.o	e66fbf4bf688d239

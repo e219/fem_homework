@@ -1,0 +1,145 @@
+\documentclass{ctexart}
+\usepackage{amsmath, amsthm, amssymb, bm, hyperref, mathrsfs, titling, enumerate, graphicx, float, subfigure}
+
+\renewcommand*{\figurename}{Fig}
+
+\title{\textbf{《有限元》读书报告}}
+\author{20224207021 李坤阳}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\newcounter{problemcounter}
+
+\noindent  考虑如下方程
+\begin{equation} 
+	-u^{\prime\prime}(x)+\pi^2\cos^2(\pi x)u(x) = f(x). ~~ x \in [0,1]
+\end{equation}
+with boundary conditions:
+\begin{equation}
+\begin{aligned}
+	u(0) = 0, \\ 
+	u(1) = 0.
+\end{aligned}
+\end{equation}
+\begin{enumerate}[i)]
+	\item Consider $f(x) = \pi^2\sin(\pi x)\cosh(\sin(\pi x))$, and check that the function $u(x) = \sinh(\sin(\pi x))$ is the solution to the boundary value problem (BVP) (1)+(2).
+	\item We want to solve this BVP numerically. We begin by discretizing the interval $[0,1]$. For this, consider the gridpoints:
+		\begin{equation}
+			x_i = ih, ~~ i=0, 1,\dots, n+1, ~ h = \frac{1}{n+1}
+		\end{equation}
+	Note that $h_i = x_{i+1}-x_i=h$ for all $i$. Now we approximate the second derivative. Show that if $g$ has four continuous derivatives, then
+		\begin{equation}
+			\frac{g_{i+1}-2g_i+g_{i-1}}{h^2} = g^{\prime\prime}_i + O(h^2),
+		\end{equation}
+	where $g_i = g(x_i)$.
+	\item Consider now the linear system of equations
+		\begin{equation}
+			-\frac{g_{i+1}-2g_i+g_{i-1}}{h^2} + \pi^2\cos^2(\pi x_i)g_i = f(x_i), ~~ i = 1, 2, \dots, n. \label{eq:refed_1}
+		\end{equation}
+	Show that this can be rewritten in matrix form as
+		$$ \boldsymbol{A} \cdot \boldsymbol{g} = \boldsymbol{f}, $$
+	where $\boldsymbol{g}=(g_1, \dots, g_n)^T, \boldsymbol{f}=(f_1, \dots, f_n)^T$, and the matrix $\boldsymbol{A}$ is tridiagonal, with entries:
+		\begin{equation}
+			a_{ij} = \left\{ \begin{array}{rll} 
+			-\frac{1}{h^2} & , & |i-j|=1 \\
+			\frac{2}{h^2} + \pi^2\cos^2(\pi x_i) & , & i=j \\
+			0 & , & otherwise. 
+			\end{array}\right.
+		\end{equation}
+	\item Show that Scheme \eqref{eq:refed_1} is second-order accurate. \label{item:refed1}
+	\item Solve the system of equation \eqref{eq:refed_1}. Use following values: $n=10, 20, 40, 80, 160, 320$. For each $h=1/(n+1)$, compute the error
+		\begin{equation}
+			e(h) = \sup_{1 \leqslant i \leqslant n} |g_i-u(x_i)|.
+		\end{equation}
+	and do a log-log plot of $e(h)$, that is, plot log($e(h)$) as a function of log($h$). Show, using this plot, that $e(h)=O(h^2)$, consistent with \ref{item:refed1}.
+\end{enumerate}
+
+\noindent Solution:
+\begin{enumerate}[i)]
+	\item Since
+	\begin{equation*}
+		\begin{aligned}
+			\sinh^\prime x &= \cosh x, \\
+			\cosh^\prime x &= \sinh x
+		\end{aligned}
+	\end{equation*}
+	we get
+	\begin{equation*}
+		\begin{aligned}
+			&u^\prime(x) = \pi\cosh(\sin \pi x), \\ 
+			\Rightarrow ~ &u^{\prime\prime}(x) = \pi^2\left[\sinh(\sin\pi x)\cos^2\pi x - \cosh(\sin\pi x)\sin\pi x\right].
+		\end{aligned}
+	\end{equation*}
+	Thus
+	\begin{equation*}
+		-u^{\prime\prime}(x) + \pi^2\cos^2(\pi x)u(x) = \pi^2\cosh(\sin\pi x)\sin\pi x = f(x).
+	\end{equation*}
+	Besides, the boundary value conditions can be easily checked. So the function $u(x) = \sinh(\sin\pi x)$ is the solution of BVP (1) + (2).
+	
+	\item Expanding the function $g(x)$ using Taylor series at points $x_i$ and $x_{i+1}$, 
+		\begin{equation*}
+			\begin{aligned}
+				g_{i+1} - g_i &= g^\prime_i h + \frac{g^{\prime\prime}_i}{2}h^2 + \frac{g^{\prime\prime\prime}_i}{3!}h^3 + O(h^4), \\
+				g_{i-1} - g_i &= -g^\prime_i h + \frac{g^{\prime\prime}_i}{2}h^2 - \frac{g^{\prime\prime\prime}_i}{3!}h^3 + O(h^4), \\
+			\end{aligned}
+		\end{equation*}
+		Subtracing the above two equations, then divideing both sides by $h^2$, we get
+			\begin{equation*}
+				\frac{g_{i+1} - 2g_i + g_{i-1}}{h^2} = g^{\prime\prime}_i + O(h^2).
+			\end{equation*}
+		where $g_i = g(x_i)$.
+		
+		\item Writing formula \eqref{eq:refed_1} as following form
+			\begin{equation}
+				-\frac{1}{h^2}g_{i-1} + \left[\frac{2}{h^2} + \pi^2\cos^2(\pi x_i) \right]g_i - \frac{1}{h^2}g_{i+1} = f(x_i), i =  2, \dots, n-1. \label{eq:refed_2}
+			\end{equation}
+		
+		We have known $g_0 = g_{n+1} = 0$ because of the boundary value conditions. So \eqref{eq:refed_1} has two special form when $i = 1, n$.
+			\begin{equation}
+				\left[\frac{2}{h^2} + \pi^2\cos^2(\pi x_1) \right]g_1 - \frac{1}{h^2}g_{2} = f(x_1). \label{eq:refed_2}
+			\end{equation}
+			\begin{equation}
+				-\frac{1}{h^2}g_{n-1} + \left[\frac{2}{h^2} + \pi^2\cos^2(\pi x_n) \right]g_n= f(x_n). \label{eq:refed_2}
+			\end{equation}
+		Write the system of equations (8) (9) (10) in matrix form $\boldsymbol{A}\boldsymbol{g} = \boldsymbol{f}$. Where matrix $\boldsymbol{A}$ is as following 
+			\begin{equation*}
+				\begin{bmatrix}
+					\frac{2}{h^2} + \pi^2\cos^2(\pi x_1) & -\frac{1}{h^2} &  &  &  \\
+					-\frac{1}{h^2} & \frac{2}{h^2} + \pi^2\cos^2(\pi x_2) & -\frac{1}{h^2} & & \\
+					 & \ddots & \ddots & \ddots &  \\
+					& &  &  &  -\frac{1}{h^2} \\
+					 & &  & -\frac{1}{h^2} & \frac{2}{h^2} + \pi^2\cos^2(\pi x_n)
+				\end{bmatrix}
+			\end{equation*}
+		and $\boldsymbol{g}=(g_1, \dots, g_n)^T, \boldsymbol{f}=(f_1, \dots, f_n)^T$.
+	\item 
+		\begin{equation*}
+			\begin{aligned}
+				\boldsymbol{\tau} &= \boldsymbol{A} \boldsymbol{u} - \boldsymbol{f} \\
+				&= \boldsymbol{A} \boldsymbol{u} - \boldsymbol{A} \boldsymbol{g} \\
+				&= \boldsymbol{A} \boldsymbol{e}
+			\end{aligned}
+		\end{equation*}
+	where $\boldsymbol{e} = \boldsymbol{u} - \boldsymbol{g}, ~ \boldsymbol{u} = (u(x_1), \dots, u(x_n))^T$.
+	Thus 
+		\begin{equation*}
+			\Vert \boldsymbol{e} \Vert \leqslant \Vert \boldsymbol{A}^{-1} \Vert \Vert \boldsymbol{\tau} \Vert \leqslant c \Vert \boldsymbol{A}^{-1} \Vert h^2
+		\end{equation*}
+	\item Solving this linear systems using chase method, then computing $e(h)$ when $n=10, 20, 40, 80, 160, 320$. A log-log plot of $e(h)$ is presented as follows.
+		\begin{figure}[H]
+			\centering
+			\includegraphics*[width=0.8\textwidth]{/home/lky/研究生课程/PDE/Project2/loglog_plot.png}
+			% \caption{Numerical results and absolute error of Taylor expansion}
+			\label{fig.1}
+		\end{figure}
+	
+	Fitting the data poings using a linear function, the result is
+			\begin{equation*}
+				\ln e(h) = 1.99474\ln h + 0.119827.
+			\end{equation*}
+	Based on the above results, it can be determined that scheme \eqref{eq:refed_1} has second-order accuracy.
+\end{enumerate}
+
+\end{document}
