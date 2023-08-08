@@ -12,6 +12,7 @@ void MG::gen_cond() {
 		tmp_ptr_v[i] = new P1Fem(m_num_nodes_each_edge[i]);
 	}
 	std::vector<std::thread> mythreads;
+	mythreads.reserve(m_lc+1);
 	for (unsigned int i = 0; i <= m_lc; ++i)	{
 		mythreads.emplace_back(&P1Fem::assemble, tmp_ptr_v[i]);
 	}

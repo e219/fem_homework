@@ -28,6 +28,7 @@ int main() {
 		}
 		else {
 			OUTPUT("wrong choice!! Choose again!\n");
+			OUTPUT("test P1Fem or MG(0/1): ");
 		}
 	}
 }
