@@ -2,7 +2,7 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "/home/dpt/cpp-project/fem_homework/bin/test"
+			"path" : "/home/dpt/cpp-project/fem_homework/bin/test_fem"
 		}
 	],
 	"backtrace" : 1,
@@ -15,7 +15,7 @@
 		],
 		"files" : 
 		[
-			"test/CMakeLists.txt"
+			"src/CMakeLists.txt"
 		],
 		"nodes" : 
 		[
@@ -42,7 +42,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : " -Wall -Wextra -g"
+					"fragment" : " -Wall -Wextra -O3 -DNDEBUG"
 				}
 			],
 			"includes" : 
@@ -67,17 +67,19 @@
 			},
 			"sourceIndexes" : 
 			[
-				0
+				0,
+				1,
+				2
 			]
 		}
 	],
-	"id" : "test::@36f028580bb02cc8272a",
+	"id" : "test_fem::@145eef247bfb46b6828c",
 	"link" : 
 	{
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "-Wall -Wextra -g",
+				"fragment" : "-Wall -Wextra -O3 -DNDEBUG",
 				"role" : "flags"
 			},
 			{
@@ -87,12 +89,12 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "test",
-	"nameOnDisk" : "test",
+	"name" : "test_fem",
+	"nameOnDisk" : "test_fem",
 	"paths" : 
 	{
-		"build" : "test",
-		"source" : "test"
+		"build" : "src",
+		"source" : "src"
 	},
 	"sourceGroups" : 
 	[
@@ -100,7 +102,9 @@
 			"name" : "Source Files",
 			"sourceIndexes" : 
 			[
-				0
+				0,
+				1,
+				2
 			]
 		}
 	],
@@ -109,7 +113,19 @@
 		{
 			"backtrace" : 1,
 			"compileGroupIndex" : 0,
-			"path" : "test/test.cpp",
+			"path" : "src/MG.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/P1Fem.cpp",
+			"sourceGroupIndex" : 0
+		},
+		{
+			"backtrace" : 1,
+			"compileGroupIndex" : 0,
+			"path" : "src/test_fem.cpp",
 			"sourceGroupIndex" : 0
 		}
 	],

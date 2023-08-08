@@ -1,4 +1,5 @@
 #include "P1Fem.h"
+#include <thread>
 
 void P1Fem::gen_cond() {
   // 下面生成节点的坐标

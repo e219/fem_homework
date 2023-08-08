@@ -6,13 +6,22 @@ void MG::gen_cond() {
 	// 生成m_A_v, m_b_v, m_num_nodes_each_edge, m_nodes
 	for (unsigned int i = 0; i <= m_lc; ++i) {
 		m_num_nodes_each_edge[i] = pow(2, i+1) + 1; 
-		P1Fem tmp(m_num_nodes_each_edge[i]);
-		tmp.assemble();
-		m_A_v[i] = tmp.copy_A();
-		m_b_v[i] = tmp.copy_b(); 
-		if (i == m_lc) {
-			m_nodes = tmp.copy_nodes();	
-		}
+	}
+	std::vector<P1Fem*> tmp_ptr_v(m_lc+1);
+	for (unsigned int i = 0; i <= m_lc; ++i) {
+		tmp_ptr_v[i] = new P1Fem(m_num_nodes_each_edge[i]);
+	}
+	std::vector<std::thread> mythreads;
+	for (unsigned int i = 0; i <= m_lc; ++i)	{
+		mythreads.emplace_back(&P1Fem::assemble, tmp_ptr_v[i]);
+	}
+	for (auto& iter : mythreads) {
+		iter.join();	
+	}
+	for (unsigned int i = 0; i <= m_lc; ++i) {
+		m_A_v.emplace_back(tmp_ptr_v[i]->copy_A());
+		m_b_v.emplace_back(tmp_ptr_v[i]->copy_b());
+		if (i == m_lc) m_nodes = tmp_ptr_v[i]->copy_nodes();
 	}
 	m_numerical_x.resize(m_num_nodes_each_edge[m_lc]*m_num_nodes_each_edge[m_lc]);
 	// 生成各层的延拓矩阵	
