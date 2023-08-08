@@ -1,4 +1,4 @@
-# Install script for directory: /home/dpt/cpp-project/读书报告
+# Install script for directory: /home/dpt/cpp-project/fem_homework
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -44,12 +44,12 @@ endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/dpt/cpp-project/读书报告/build/src/cmake_install.cmake")
+  include("/home/dpt/cpp-project/fem_homework/build/src/cmake_install.cmake")
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
   # Include the install script for the subdirectory.
-  include("/home/dpt/cpp-project/读书报告/build/test/cmake_install.cmake")
+  include("/home/dpt/cpp-project/fem_homework/build/test/cmake_install.cmake")
 endif()
 
 if(CMAKE_INSTALL_COMPONENT)
@@ -60,5 +60,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "/home/dpt/cpp-project/读书报告/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "/home/dpt/cpp-project/fem_homework/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

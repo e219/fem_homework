@@ -61,7 +61,7 @@ public:
 
   double err();
 
-  void write_to_file(string file_path);
+  void write_to_file(const string& file_path);
 
   SpMat copy_A() { return m_A; };
 

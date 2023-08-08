@@ -22,7 +22,7 @@ ax1.set_zlabel('$z$')
 
 # ===========================================================
 # 读取CSV文件
-data = pd.read_csv("data/numerical_result_4.csv")
+data = pd.read_csv("/home/dpt/cpp-project/fem_homework/data/mg_numerical_result.csv")
 
 # 提取x、y、z列的数据
 x = data['x']

@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/g++
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/dpt/cpp-project/读书报告/include -I/usr/include/eigen3
+CXX_INCLUDES = -I/home/dpt/cpp-project/fem_homework/include -I/usr/include/eigen3
 
 CXX_FLAGS =  -Wall -Wextra -g
 

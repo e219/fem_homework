@@ -1,6 +1,6 @@
 src/CMakeFiles/test_fem.dir/MG.cpp.o: \
- /home/dpt/cpp-project/读书报告/src/MG.cpp /usr/include/stdc-predef.h \
- /home/dpt/cpp-project/读书报告/include/MG.h \
+ /home/dpt/cpp-project/fem_homework/src/MG.cpp /usr/include/stdc-predef.h \
+ /home/dpt/cpp-project/fem_homework/include/MG.h \
  /usr/include/eigen3/Eigen/Eigen /usr/include/eigen3/Eigen/Dense \
  /usr/include/eigen3/Eigen/Core \
  /usr/include/eigen3/Eigen/src/Core/util/DisableStupidWarnings.h \
@@ -478,7 +478,7 @@ src/CMakeFiles/test_fem.dir/MG.cpp.o: \
  /usr/include/c++/11/list /usr/include/c++/11/bits/stl_list.h \
  /usr/include/c++/11/bits/allocated_ptr.h \
  /usr/include/c++/11/bits/list.tcc \
- /home/dpt/cpp-project/读书报告/include/P1Fem.h \
+ /home/dpt/cpp-project/fem_homework/include/P1Fem.h \
  /usr/include/c++/11/fstream /usr/include/c++/11/bits/codecvt.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/basic_file.h \
  /usr/include/x86_64-linux-gnu/c++/11/bits/c++io.h \

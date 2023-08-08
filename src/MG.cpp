@@ -72,8 +72,8 @@ double MG::err() {
 	return (m_numerical_x - exact_x).lpNorm<Infinity>();
 };
 
-void MG::write_to_file(string file_path) {
-  std::ofstream file(file_path);
+void MG::write_to_file(const string& file_path) {
+  std::ofstream file(file_path.c_str());
   if (file.is_open()) {
     double last_x = m_nodes(0, 0);
     int k = 0;

@@ -6,22 +6,24 @@
 
 #define OUTPUT(x) std::cout << x;
 
-void write_to_file(const std::string& file_path, const std::vector<double>& h_array, const std::vector<double>& err_array);
+void write_to_file(const string& file_path, const std::vector<double>& h_array, const std::vector<double>& err_array);
 
-void test_p1fem();
-void test_mg();
+void test_p1fem(const string& data_dir);
+void test_mg(const string& data_dir);
 
 int main() {
 	OUTPUT("test P1Fem or MG(0/1): ");
 	unsigned int choice;
+	// 设置生成的数据文件的输出目录，为项目根目录下的data子目录
+	const string data_dir = "/home/dpt/cpp-project/fem_homework/data/";
 	while (true) {
 		std::cin >> choice;
 		if(choice == 0) {
-			test_p1fem();
+			test_p1fem(data_dir);
 			break;
 		}
 		else if (choice == 1) {
-			test_mg();
+			test_mg(data_dir);
 			break;
 		}
 		else {
@@ -30,8 +32,8 @@ int main() {
 	}
 }
 
-void write_to_file(const std::string& file_path, const std::vector<double>& h_array, const std::vector<double>& err_array) {
-	std::ofstream file(file_path);
+void write_to_file(const string& file_path, const std::vector<double>& h_array, const std::vector<double>& err_array) {
+	std::ofstream file(file_path.c_str());
 	if(file.is_open()) {
 		file << "h, err(0)\n";
 		for (unsigned int i = 0; i < h_array.size(); ++i) {
@@ -45,7 +47,7 @@ void write_to_file(const std::string& file_path, const std::vector<double>& h_ar
 	}
 }
 
-void test_p1fem() {
+void test_p1fem(const string& data_dir) {
 	std::cout << "input until_level: ";
 	unsigned int until_level;
 	std::cin >> until_level;
@@ -58,14 +60,14 @@ void test_p1fem() {
 		temp.assemble().direct_solve();
 		err_v[i] = temp.err();
 		h_v[i] = 1.0 / (num_nodes_each_edge-1);
-		temp.write_to_file("../data/numerical_result_" + std::to_string(i) + ".csv");
+		temp.write_to_file(data_dir + "numerical_result_" + std::to_string(i) + ".csv");
 	}
 
-	write_to_file("../data/multi_h_err.csv", h_v, err_v);
+	write_to_file(data_dir + "multi_h_err.csv", h_v, err_v);
 }
 
 
-void test_mg() {
+void test_mg(const string& data_dir) {
 	std::cout << "input the max_level: ";
 	unsigned int max_level;
 	std::cin >> max_level;
@@ -84,5 +86,5 @@ void test_mg() {
 	std::cout << "l-infinity norm: " << my_mg.err() << "\n";
 	std::cout << "iteration times: " << iteration << "\n";
 
-	my_mg.write_to_file("../data/mg_numerical_result.csv");
+	my_mg.write_to_file(data_dir + "mg_numerical_result.csv");
 }

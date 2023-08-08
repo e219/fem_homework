@@ -1,6 +1,5 @@
 #include "P1Fem.h"
 
-
 void P1Fem::gen_cond() {
   // 下面生成节点的坐标
   // 求解区域边界为[0, 1]x[0, 1], 三角形单元，单元全等
@@ -175,8 +174,8 @@ void P1Fem::calc_fun_g(Ref<ArrayXXd> g_val) {
     g_val.bottomRightCorner(m_num_each_edge, 1) = (2*PI*x2).sin() * (-2*PI*(2*PI*y2).sin() + (2*PI*y2).cos());
 };
 
-void P1Fem::write_to_file(string file_path) {
-  std::ofstream file(file_path);
+void P1Fem::write_to_file(const string& file_path) {
+  std::ofstream file(file_path.c_str());
   if (file.is_open()) {
     double last_x = m_nodes(0, 0);
     int k = 0;

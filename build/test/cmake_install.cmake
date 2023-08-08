@@ -1,4 +1,4 @@
-# Install script for directory: /home/dpt/cpp-project/读书报告/test
+# Install script for directory: /home/dpt/cpp-project/fem_homework/test
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
