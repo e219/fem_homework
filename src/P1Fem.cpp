@@ -175,7 +175,7 @@ void P1Fem::calc_fun_g(Ref<ArrayXXd> g_val) {
 };
 
 void P1Fem::write_to_file(const string& file_path) {
-  std::ofstream file(file_path.c_str());
+  std::ofstream file(file_path.c_str());   // 注意这里要用C风格的字符串
   if (file.is_open()) {
     double last_x = m_nodes(0, 0);
     int k = 0;

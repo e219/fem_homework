@@ -33,7 +33,7 @@ int main() {
 }
 
 void write_to_file(const string& file_path, const std::vector<double>& h_array, const std::vector<double>& err_array) {
-	std::ofstream file(file_path.c_str());
+	std::ofstream file(file_path.c_str());   // 注意这里要用C风格的字符串
 	if(file.is_open()) {
 		file << "h, err(0)\n";
 		for (unsigned int i = 0; i < h_array.size(); ++i) {
