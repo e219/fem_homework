@@ -33,21 +33,6 @@ int main() {
 	}
 }
 
-void write_to_file(const string& file_path, const std::vector<double>& h_array, const std::vector<double>& err_array) {
-	std::ofstream file(file_path.c_str());   // 注意这里要用C风格的字符串
-	if(file.is_open()) {
-		file << "h, err(0)\n";
-		for (unsigned int i = 0; i < h_array.size(); ++i) {
-			file << h_array[i] << ", " << err_array[i] << "\n";
-		}
-		std::cout << "success to write to " << file_path << "\n";
-		file.close();
-	}
-	else {
-		std::cout << "unable to open file!\n\n";
-	}
-}
-
 void test_p1fem(const string& data_dir) {
 	std::cout << "input until_level: ";
 	unsigned int until_level;
@@ -88,4 +73,19 @@ void test_mg(const string& data_dir) {
 	std::cout << "iteration times: " << iteration << "\n";
 
 	my_mg.write_to_file(data_dir + "mg_numerical_result.csv");
+}
+
+void write_to_file(const string& file_path, const std::vector<double>& h_array, const std::vector<double>& err_array) {
+	std::ofstream file(file_path.c_str());   // 注意这里要用C风格的字符串
+	if(file.is_open()) {
+		file << "h, err(0)\n";
+		for (unsigned int i = 0; i < h_array.size(); ++i) {
+			file << h_array[i] << ", " << err_array[i] << "\n";
+		}
+		std::cout << "success to write to " << file_path << "\n";
+		file.close();
+	}
+	else {
+		std::cout << "unable to open file!\n\n";
+	}
 }
