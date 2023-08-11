@@ -1,22 +1,22 @@
 [
 {
   "directory": "/home/dpt/cpp-project/fem_homework/build/src",
-  "command": "/usr/bin/g++  -I/home/dpt/cpp-project/fem_homework/include -I/usr/include/eigen3  -Wall -Wextra -O3 -DNDEBUG -o CMakeFiles/test_fem.dir/MG.cpp.o -c /home/dpt/cpp-project/fem_homework/src/MG.cpp",
+  "command": "/usr/bin/g++  -I/home/dpt/cpp-project/fem_homework/include -I/usr/include/eigen3  -Wall -Wextra -g -o CMakeFiles/test_fem.dir/MG.cpp.o -c /home/dpt/cpp-project/fem_homework/src/MG.cpp",
   "file": "/home/dpt/cpp-project/fem_homework/src/MG.cpp"
 },
 {
   "directory": "/home/dpt/cpp-project/fem_homework/build/src",
-  "command": "/usr/bin/g++  -I/home/dpt/cpp-project/fem_homework/include -I/usr/include/eigen3  -Wall -Wextra -O3 -DNDEBUG -o CMakeFiles/test_fem.dir/P1Fem.cpp.o -c /home/dpt/cpp-project/fem_homework/src/P1Fem.cpp",
+  "command": "/usr/bin/g++  -I/home/dpt/cpp-project/fem_homework/include -I/usr/include/eigen3  -Wall -Wextra -g -o CMakeFiles/test_fem.dir/P1Fem.cpp.o -c /home/dpt/cpp-project/fem_homework/src/P1Fem.cpp",
   "file": "/home/dpt/cpp-project/fem_homework/src/P1Fem.cpp"
 },
 {
   "directory": "/home/dpt/cpp-project/fem_homework/build/src",
-  "command": "/usr/bin/g++  -I/home/dpt/cpp-project/fem_homework/include -I/usr/include/eigen3  -Wall -Wextra -O3 -DNDEBUG -o CMakeFiles/test_fem.dir/test_fem.cpp.o -c /home/dpt/cpp-project/fem_homework/src/test_fem.cpp",
+  "command": "/usr/bin/g++  -I/home/dpt/cpp-project/fem_homework/include -I/usr/include/eigen3  -Wall -Wextra -g -o CMakeFiles/test_fem.dir/test_fem.cpp.o -c /home/dpt/cpp-project/fem_homework/src/test_fem.cpp",
   "file": "/home/dpt/cpp-project/fem_homework/src/test_fem.cpp"
 },
 {
   "directory": "/home/dpt/cpp-project/fem_homework/build/test",
-  "command": "/usr/bin/g++  -I/home/dpt/cpp-project/fem_homework/include -I/usr/include/eigen3  -Wall -Wextra -O3 -DNDEBUG -o CMakeFiles/test.dir/test.cpp.o -c /home/dpt/cpp-project/fem_homework/test/test.cpp",
+  "command": "/usr/bin/g++  -I/home/dpt/cpp-project/fem_homework/include -I/usr/include/eigen3  -Wall -Wextra -g -o CMakeFiles/test.dir/test.cpp.o -c /home/dpt/cpp-project/fem_homework/test/test.cpp",
   "file": "/home/dpt/cpp-project/fem_homework/test/test.cpp"
 }
 ]

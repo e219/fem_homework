@@ -49,10 +49,7 @@ void P1Fem::gen_cond() {
       m_elem(kth++, 2) = (j - 1) * m_num_nodes_each_edge + i + 1;
     }
   }
-}
-
-// 计算基函数的梯度
-void P1Fem::grad_basis() {
+  // 计算基函数的梯度
   MatrixXd ve1 = m_nodes(m_elem.col(1), all) - m_nodes(m_elem.col(2), all);
   MatrixXd ve2 = m_nodes(m_elem.col(2), all) - m_nodes(m_elem.col(0), all);
   MatrixXd ve3 = m_nodes(m_elem.col(0), all) - m_nodes(m_elem.col(1), all);
@@ -75,11 +72,9 @@ inline void P1Fem::f(const Ref<const VectorXd>& x, const Ref<const VectorXd>& y,
   fv = 8 * PI * PI * (2*PI*x).array().sin() * (2*PI*y).array().cos();
 }
 
-
 P1Fem& P1Fem::assemble() {
   // 先计算好必要的数据
   gen_cond();
-  grad_basis();
   // 组装刚度矩阵
   // 由于刚度矩阵A稀疏，出于效率考虑，给一个每列非零元素数量的估计值
   int num_estimate_nz = std::min(7, int(m_A.rows()));
@@ -204,11 +199,29 @@ void P1Fem::direct_solve() {
 }
 
 double P1Fem::err() {
-  VectorXd exact_x = (2*PI*m_nodes.array().col(0)).sin() * (2*PI*m_nodes.array().col(1)).cos();
+  // VectorXd exact_x = (2*PI*m_nodes.array().col(0)).sin() * (2*PI*m_nodes.array().col(1)).cos();
+  // 求解析解在三角形单元各边中点处的值
+  MatrixXd mid_points_coord(m_elem.rows(), 2*m_elem.cols());
+  for (int i = 0; i < m_elem.cols(); ++i) {
+    // 边i, i+1中点的x坐标
+    mid_points_coord.col(2*i) = m_nodes(m_elem.col(i), 0) + m_nodes(m_elem.col((i+1)%m_elem.cols()), 0);
+    // 边i, i+1中点的x坐标
+    mid_points_coord.col(2*i+1) = m_nodes(m_elem.col(i), 1) + m_nodes(m_elem.col((i+1)%m_elem.cols()), 1);
+  }
+  MatrixXd mid_points_val(m_elem.rows(), m_elem.cols());
+  for (int i = 0; i < m_elem.cols(); ++i) {
+    mid_points_val.col(i) = (2*PI*mid_points_coord.array().col(2*i)).sin() * (2*PI*mid_points_coord.array().col(2*i+1)).cos();
+  }
+  MatrixXd mid_s(m_elem.rows(), m_elem.cols());
+  for (int i = 0; i < m_elem.cols(); ++i) {
+    mid_s.col(i) = (m_numerical_x(m_elem.col(i)) + m_numerical_x(m_elem.col((i+1)%m_elem.cols()))) / 2.0;
+  }
+  VectorXd maj = (mid_points_val.array() - mid_s.array()).square().rowwise().sum();
+  return maj.dot(m_area/3.0);
   // MatrixXd err_mat(m_elem.rows(), m_elem.cols());
   // err_mat.reshaped() = exact_x(m_elem.reshaped()) - m_numerical_x(m_elem.reshaped());
   // err_mat = err_mat.array().square();
   // VectorXd vl = err_mat.rowwise().sum();
   // return (vl.array() * m_area.array()/3).sum();
-  return (m_numerical_x - exact_x).lpNorm<Infinity>();
+  // return (m_numerical_x - exact_x).lpNorm<Infinity>();
 }

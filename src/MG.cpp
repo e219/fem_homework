@@ -22,15 +22,19 @@ void MG::gen_cond() {
 	for (unsigned int i = 0; i <= m_lc; ++i) {
 		m_A_v.emplace_back(tmp_ptr_v[i]->copy_A());
 		m_b_v.emplace_back(tmp_ptr_v[i]->copy_b());
-		if (i == m_lc) m_nodes = tmp_ptr_v[i]->copy_nodes();
+		if (i == m_lc) {
+			m_nodes = tmp_ptr_v[i]->copy_nodes();
+			m_elem = tmp_ptr_v[i]->copy_elem();
+			m_area = tmp_ptr_v[i]->copy_area();
+		}
 	}
+	
 	m_numerical_x.resize(m_num_nodes_each_edge[m_lc]*m_num_nodes_each_edge[m_lc]);
 	// 生成各层的延拓矩阵	
 	for (unsigned int i = 0; i < m_lc; ++i) {
 		m_P_v[i] = get_prolongation_matrix(i);
 	}
 }
-
 
 VectorXd MG::mg(unsigned int l, VectorXd z0, const VectorXd& g) {
 	if (l == 0) {
@@ -55,14 +59,12 @@ VectorXd MG::mg(unsigned int l, VectorXd z0, const VectorXd& g) {
 		z0 = pre_result + prolongation_mat * qp;
 
 		return gauss_seidel(l, z0, g);
-		
 	}
 };
 
 unsigned int MG::solve() {
 	gen_cond();
 	VectorXd temp_solu(m_numerical_x.size());
-	// temp_solu = mg(m_lc, VectorXd::Zero(m_b_v[m_lc].size()), m_b_v[m_lc]);
 	double b_norm = m_b_v[m_lc].lpNorm<Infinity>();
 	double el; 
 	unsigned int iteration = 0;
@@ -77,32 +79,47 @@ unsigned int MG::solve() {
 	return iteration;
 }
 
-double MG::err() {
-	VectorXd exact_x = (2*PI*m_nodes.array().col(0)).sin() * (2*PI*m_nodes.array().col(1)).cos();
-	return (m_numerical_x - exact_x).lpNorm<Infinity>();
-};
+// double MG::err() {
+//   MatrixXd mid_points_coord(m_elem.rows(), 2*m_elem.cols());
+//   for (int i = 0; i < m_elem.cols(); ++i) {
+//     // 边i, i+1中点的x坐标
+//     mid_points_coord.col(2*i) = m_nodes(m_elem.col(i), 0) + m_nodes(m_elem.col((i+1)%m_elem.cols()), 0);
+//     // 边i, i+1中点的x坐标
+//     mid_points_coord.col(2*i+1) = m_nodes(m_elem.col(i), 1) + m_nodes(m_elem.col((i+1)%m_elem.cols()), 1);
+//   }
+//   MatrixXd mid_points_val(m_elem.rows(), m_elem.cols());
+//   for (int i = 0; i < m_elem.cols(); ++i) {
+//     mid_points_val.col(i) = (2*PI*mid_points_coord.array().col(2*i)).sin() * (2*PI*mid_points_coord.array().col(2*i+1)).cos();
+//   }
+//   MatrixXd mid_s(m_elem.rows(), m_elem.cols());
+//   for (int i = 0; i < m_elem.cols(); ++i) {
+//     mid_s.col(i) = (m_numerical_x(m_elem.col(i)) + m_numerical_x(m_elem.col((i+1)%m_elem.cols()))) / 2.0;
+//   }
+//   VectorXd maj = (mid_points_val.array() - mid_s.array()).square().rowwise().sum();
+//   return maj.dot(m_area/3.0);
+// };
 
-void MG::write_to_file(const string& file_path) {
-  std::ofstream file(file_path.c_str());   // 注意这里要用C风格的字符串
-  if (file.is_open()) {
-    double last_x = m_nodes(0, 0);
-    int k = 0;
-    file << "x,y,z\n";
-    for (int i = 0; i < m_nodes.rows(); ++i) {
-      // 若两个点的x坐标不同，则先插入一个空行，然后再输出坐标
-      if (abs(m_nodes(i, 0) - last_x) > 1e-8) {
-        file << "\n";
-        last_x = m_nodes(i, 0);
-      }
-      file << m_nodes(i, 0) << ", " << m_nodes(i, 1) << ", " << m_numerical_x(k++) << "\n";
-    }
-    file.close();
-    std::cout << "The numerical results has been written to " << file_path << "\n";
-  }
-  else {
-    std::cout << "Unable to open file!\n";
-  }
-}
+// void MG::write_to_file(const string& file_path) {
+//   std::ofstream file(file_path.c_str());   // 注意这里要用C风格的字符串
+//   if (file.is_open()) {
+//     double last_x = m_nodes(0, 0);
+//     int k = 0;
+//     file << "x,y,z\n";
+//     for (int i = 0; i < m_nodes.rows(); ++i) {
+//       // 若两个点的x坐标不同，则先插入一个空行，然后再输出坐标
+//       if (abs(m_nodes(i, 0) - last_x) > 1e-8) {
+//         file << "\n";
+//         last_x = m_nodes(i, 0);
+//       }
+//       file << m_nodes(i, 0) << ", " << m_nodes(i, 1) << ", " << m_numerical_x(k++) << "\n";
+//     }
+//     file.close();
+//     std::cout << "The numerical results has been written to " << file_path << "\n";
+//   }
+//   else {
+//     std::cout << "Unable to open file!\n";
+//   }
+// }
 
 
 VectorXd MG::jacobi(unsigned int l, VectorXd& z0, const VectorXd& b) {

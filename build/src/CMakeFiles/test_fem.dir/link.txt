@@ -1,1 +1,1 @@
-/usr/bin/g++  -Wall -Wextra -O3 -DNDEBUG CMakeFiles/test_fem.dir/MG.cpp.o CMakeFiles/test_fem.dir/P1Fem.cpp.o CMakeFiles/test_fem.dir/test_fem.cpp.o -o ../../bin/test_fem 
+/usr/bin/g++  -Wall -Wextra -g CMakeFiles/test_fem.dir/MG.cpp.o CMakeFiles/test_fem.dir/P1Fem.cpp.o CMakeFiles/test_fem.dir/test_fem.cpp.o -o ../../bin/test_fem 
