@@ -15,7 +15,7 @@ int main() {
 	OUTPUT("test P1Fem or MG(0/1): ");
 	unsigned int choice;
 	// 设置生成的数据文件的输出目录，为项目根目录下的data子目录
-	const string data_dir = "/home/dpt/cpp-project/fem_homework_2/data/";
+	const string data_dir = "/home/dpt/cpp-project/fem_homework/data/";
 	while (true) {
 		std::cin >> choice;
 		if(choice == 0) {
